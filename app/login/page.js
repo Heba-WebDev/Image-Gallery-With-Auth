@@ -66,11 +66,9 @@ export default function Login() {
       try {
         const { result, error } = await signIn(user.email, user.password);
         if (result) {
-          console.log(result);
-          // You can perform actions here after a successful sign-in.
+          router.push("/");
         } else {
           console.log(error);
-          // Handle authentication errors here.
         }
       } catch (error) {
         console.error("Error signing in:", error);
