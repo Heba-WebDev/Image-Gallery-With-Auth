@@ -1,19 +1,13 @@
 "use client";
-import { useState, useEffect } from "react";
-import { validateEmail } from "../../utils/Validation";
-import signIn from "@/firebase/auth/signin";
-import { useAuthContext } from "@/context/AuthContext";
+import { useState } from "react";
+import signUp from "../../firebase/auth/signup";
 import { useRouter } from "next/navigation";
+import { validateEmail } from "@/utils/Validation";
+import addData from "@/firebase/firestore/addData";
+import { v4 as uuidv4 } from "uuid";
 
-export default function Login() {
+export default function Signup() {
   const router = useRouter();
-  const { user: authedUser } = useAuthContext();
-
-  useEffect(() => {
-    if (authedUser) {
-      router.push("/");
-    }
-  }, [authedUser, router]);
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -30,6 +24,7 @@ export default function Login() {
       };
     });
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!validateEmail(user.email)) {
@@ -62,23 +57,25 @@ export default function Login() {
         };
       });
     }
-    if (validateEmail(user.email) && user.password) {
-      try {
-        const { result, error } = await signIn(user.email, user.password);
-        if (result) {
-          router.push("/");
-        } else {
-          console.log(error);
-        }
-      } catch (error) {
-        console.error("Error signing in:", error);
+
+    try {
+      const userRef = await addData("users", uuidv4(), {
+        email: user.email,
+        password: user.password,
+      });
+
+      if (userRef) {
+        signUp(user.email, user.password);
+        router.push("/login");
       }
+    } catch (error) {
+      console.error(error);
     }
   };
   return (
     <section className="flex flex-col justify-center items-center gap-2 h-[100vh]">
       <h2 className={`text-blue-600 font-bold text-3xl text-center`}>
-        Login here
+        Sign up
       </h2>
       <h3 className="text-xl font-semibold text-center">
         Welcome back you’ve been missed!
@@ -123,7 +120,7 @@ export default function Login() {
           type="submit"
           className="bg-blue-600 text-white py-2 rounded-lg text-lg"
         >
-          Login
+          Sign up
         </button>
       </form>
     </section>
