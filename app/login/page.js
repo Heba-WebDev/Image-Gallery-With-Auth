@@ -83,6 +83,7 @@ export default function Login() {
       <h3 className="text-xl font-semibold text-center">
         Welcome back you’ve been missed!
       </h3>
+
       <form
         className="grid gap-6 py-6 w-[75%] md:w-[40%]"
         onSubmit={handleSubmit}
@@ -126,6 +127,7 @@ export default function Login() {
           Login
         </button>
       </form>
+      <span>Demo account: user@example.com 1Password</span>
     </section>
   );
 }

@@ -1,8 +1,8 @@
 import "./globals.css";
-import { Inter } from "next/font/google";
+import { DM_Mono, DM_Sans, Inter, Poppins, Sansita } from "next/font/google";
 import { AuthContextProvider } from "@/context/AuthContext";
 
-const inter = Inter({ subsets: ["latin"] });
+const mono = DM_Mono({ weight: ["400", "500"], subsets: ["latin"] });
 
 export const metadata = {
   title: "Image Gallery",
@@ -12,7 +12,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={mono.className}>
         <AuthContextProvider>{children}</AuthContextProvider>
       </body>
     </html>
