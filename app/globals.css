@@ -2,3 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+.container-custom {
+	padding-inline: 1em;
+	margin-inline: auto;
+	max-width: 81.75em;
+}
+
+@media (min-width: 768px) {
+	.container-custom {
+		padding-inline: 1.5em;
+	}
+}
+
+@media (min-width: 568px) {
+	.container-custom {
+		padding-inline: 1em;
+	}
+}
